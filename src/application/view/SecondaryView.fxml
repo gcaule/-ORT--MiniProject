@@ -35,7 +35,7 @@
                               <Insets bottom="25.0" />
                            </padding>
                         </Label>
-                        <TextField minHeight="-Infinity" minWidth="450.0" />
+                        <TextField fx:id="foodNameTF" minHeight="-Infinity" minWidth="450.0" promptText="Entrez un aliment" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -58,7 +58,7 @@
                               <Insets bottom="25.0" />
                            </padding>
                         </Label>
-                        <DatePicker />
+                        <DatePicker fx:id="dateAchatDP" promptText="dd-MM-yyyy" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="132.0" prefHeight="55.0" prefWidth="200.0">
@@ -67,14 +67,22 @@
                            <padding>
                               <Insets bottom="25.0" />
                            </padding></Label>
-                        <DatePicker />
+                        <DatePicker fx:id="datePeremptionDP" promptText="dd-MM-yyyy" />
                      </children>
                   </HBox>
                </children>
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="validateButton" mnemonicParsing="false" onAction="#handleValidateButton" text="Entrer le produit dans la liste" />
+                  <Button fx:id="validateButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleValidateButton" text="Entrer le produit dans la liste">
+                     <HBox.margin>
+                        <Insets right="35.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="cancelButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCancelButton" text="Annuler">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>

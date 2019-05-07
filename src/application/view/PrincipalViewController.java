@@ -11,8 +11,9 @@ import javafx.stage.Stage;
 public class PrincipalViewController {
 
 	@FXML private Button addItem;
+	@FXML private Button quitButton;
 
-	@FXML private void handleAddItem() {
+	public void handleAddItem() {
 		
 		try {
 			//On charge le fichier FXML pour l'utiliser comme scène
@@ -29,6 +30,14 @@ public class PrincipalViewController {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void handleQuitButton() {
+		
+		//On récupère le Stage et on le ferme
+		Stage stage = (Stage) quitButton.getScene().getWindow();
+		stage.close();
+		
 	}
 
 }

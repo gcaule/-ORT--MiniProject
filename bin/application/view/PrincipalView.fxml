@@ -27,12 +27,17 @@
                <children>
                   <Button fx:id="addItem" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddItem" text="Ajouter un produit" textAlignment="JUSTIFY">
                      <HBox.margin>
-                        <Insets right="35.0" top="10.0" />
+                        <Insets right="20.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Supprimer le produit sélectionné" textAlignment="JUSTIFY">
                      <HBox.margin>
-                        <Insets left="35.0" top="10.0" />
+                        <Insets left="20.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="quitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleQuitButton" text="Quitter" textAlignment="JUSTIFY">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                </children>

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.time.LocalDate;
 
 import application.model.beans.Aliment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AlimentDAO extends DAO<Aliment> {
 
@@ -22,7 +24,7 @@ public class AlimentDAO extends DAO<Aliment> {
 			statement.executeUpdate("CREATE TABLE IF NOT EXISTS `foodInFridge`.`Aliment` (" + 
 					" `Id` INT NOT NULL AUTO_INCREMENT," + 
 					" `Nom` VARCHAR(45) NOT NULL," + 
-					" `Quantite` INT NOT NULL," + 
+					" `Quantité` INT NOT NULL," + 
 					" `DateAchat` DATE NOT NULL," + 
 					" `DatePeremption` DATE NOT NULL," + 
 					" PRIMARY KEY (`id`))" + 
@@ -34,6 +36,35 @@ public class AlimentDAO extends DAO<Aliment> {
 
 		return null;
 	}
+
+	@Override
+	public ObservableList<Aliment> fetchEntries() {
+
+		// On récupère les tuples de la BDD
+		try {
+
+			//On va les stocker dans une liste
+			ObservableList<Aliment> aliment = FXCollections.observableArrayList();
+
+			Statement statement = connect.createStatement();
+			ResultSet result = statement.executeQuery("SELECT * FROM Aliment ;");
+
+			while (result.next()) {
+				aliment.add(new Aliment(result.getInt("Id"),
+						result.getString("Nom"),
+						result.getInt("Quantité"),
+						result.getDate("DateAchat").toLocalDate(),
+						result.getDate("DatePeremption").toLocalDate()));
+			}
+			return aliment;
+
+		} catch (Exception e) {
+			System.out.println("AlimentDAO: fetchEntries() failed: " + e);
+		}
+
+		return null;
+	}
+
 
 	@Override
 	public Aliment find(int id) {
@@ -80,10 +111,10 @@ public class AlimentDAO extends DAO<Aliment> {
 		LocalDate datePeremption = obj.getDatePeremption();
 
 		try {
-			
+
 			//On stocke les variables dans la BDD
 			Statement statement = connect.createStatement();
-			statement.execute("INSERT INTO Aliment (Nom, Quantite, DateAchat, DatePeremption) VALUES"
+			statement.execute("INSERT INTO Aliment (Nom, Quantité, DateAchat, DatePeremption) VALUES"
 					+ "('" + nom + "', " + quantite + ", '" + dateAchat + "', '" + datePeremption + "')");
 
 		} catch (Exception e) {

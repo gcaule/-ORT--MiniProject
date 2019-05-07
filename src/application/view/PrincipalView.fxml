@@ -12,12 +12,12 @@
    <children>
       <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <TableView minHeight="-Infinity" minWidth="-Infinity">
+            <TableView fx:id="alimentTV" minHeight="-Infinity" minWidth="-Infinity">
               <columns>
-                <TableColumn prefWidth="150.0" text="Type d'aliment" />
-                <TableColumn prefWidth="75.0" text="Qté" />
-                  <TableColumn prefWidth="150.0" text="Date d'achat" />
-                  <TableColumn prefWidth="150.0" text="Date péremption" />
+                <TableColumn fx:id="alimentColumn" prefWidth="150.0" text="Type d'aliment" />
+                <TableColumn fx:id="quantiteColumn" prefWidth="75.0" text="Qté" />
+                  <TableColumn fx:id="dateAchatColumn" prefWidth="150.0" text="Date d'achat" />
+                  <TableColumn fx:id="datePeremptionColumn" prefWidth="150.0" text="Date péremption" />
               </columns>
                <VBox.margin>
                   <Insets />

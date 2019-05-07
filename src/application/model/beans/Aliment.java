@@ -4,6 +4,15 @@ import java.time.LocalDate;
 
 public class Aliment {
 	
+	public Aliment(int id, String nom, int quantite, LocalDate dateAchat, LocalDate datePeremption) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.quantite = quantite;
+		this.dateAchat = dateAchat;
+		this.datePeremption = datePeremption;
+	}
+
 	private int id;
 	private String nom;
 	private int quantite;

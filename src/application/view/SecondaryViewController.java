@@ -1,11 +1,14 @@
 package application.view;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.stream.IntStream;
 
 import application.model.DAO.AlimentDAO;
 import application.model.beans.Aliment;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -61,12 +64,11 @@ public class SecondaryViewController {
 			
 			//On met l'objet dans la BDD
 			AlimentDAO createAliment = new AlimentDAO();
-			createAliment.create(aliment);
-
+			createAliment.create(aliment);			
+			
 			//On récupère le Stage et on le ferme
 			Stage stage = (Stage) validateButton.getScene().getWindow();
 			stage.close();
-
 		}
 	}
 

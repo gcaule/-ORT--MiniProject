@@ -2,6 +2,9 @@ package application.model.DAO;
 
 import java.sql.*;
 
+import application.model.beans.Aliment;
+import javafx.collections.ObservableList;
+
 public abstract class DAO<T> {
 
 	//Je récupère une instance de connextion grâce à la méthode statique getInstance()
@@ -10,6 +13,9 @@ public abstract class DAO<T> {
 
 	/** * Permet de créer une base de données */
 	public abstract T createDB();
+
+	/** * Permet de récupérer une liste de tuples de la base de données */
+	public abstract ObservableList<Aliment> fetchEntries();
 
 	/** * Permet de récupérer un objet via son ID * @param id * @return */
 	public abstract T find(int id);

@@ -1,11 +1,10 @@
 package application.view;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.stream.IntStream;
 
+import application.model.DAO.AlimentDAO;
+import application.model.beans.Aliment;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -37,7 +36,7 @@ public class SecondaryViewController {
 
 	public void handleValidateButton() {
 
-		//On vérifie que l'utilisateur a bien renseigné tous les champs renseignables
+		//On vérifie que l'utilisateur ait bien renseigné tous les champs renseignables
 		if ( foodNameTF.getText() == null || foodNameTF.getText().trim().isEmpty() ) {
 
 			//Nope, message d'alerte
@@ -52,6 +51,17 @@ public class SecondaryViewController {
 			int quantite = (int) quantityComboBox.getValue();
 			LocalDate dateAchat = dateAchatDP.getValue();
 			LocalDate datePeremption = datePeremptionDP.getValue();
+			
+			//On met les infos dans un objet
+			Aliment aliment = new Aliment();
+			aliment.setNom(nomAliment);
+			aliment.setQuantite(quantite);
+			aliment.setDateAchat(dateAchat);
+			aliment.setDatePeremption(datePeremption);
+			
+			//On met l'objet dans la BDD
+			AlimentDAO createAliment = new AlimentDAO();
+			createAliment.create(aliment);
 
 			//On récupère le Stage et on le ferme
 			Stage stage = (Stage) validateButton.getScene().getWindow();

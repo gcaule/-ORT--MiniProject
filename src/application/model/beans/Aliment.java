@@ -1,14 +1,14 @@
 package application.model.beans;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Aliment {
 	
 	private int id;
 	private String nom;
 	private int quantite;
-	private Date dateAchat;
-	private Date datePeremption;
+	private LocalDate dateAchat;
+	private LocalDate datePeremption;
 	
 	public Aliment() {
 		
@@ -38,19 +38,19 @@ public class Aliment {
 		this.quantite = quantite;
 	}
 
-	public Date getDateAchat() {
+	public LocalDate getDateAchat() {
 		return dateAchat;
 	}
 
-	public void setDateAchat(Date dateAchat) {
+	public void setDateAchat(LocalDate dateAchat) {
 		this.dateAchat = dateAchat;
 	}
 
-	public Date getDatePeremption() {
+	public LocalDate getDatePeremption() {
 		return datePeremption;
 	}
 
-	public void setDatePeremption(Date dateperemption) {
+	public void setDatePeremption(LocalDate dateperemption) {
 		this.datePeremption = dateperemption;
 	}
 

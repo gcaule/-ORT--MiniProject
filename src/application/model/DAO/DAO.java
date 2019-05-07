@@ -8,6 +8,9 @@ public abstract class DAO<T> {
 	//de MySQLConnection.java
 	public Connection connect = MySQLConnection.getInstance();
 
+	/** * Permet de créer une base de données */
+	public abstract T createDB();
+
 	/** * Permet de récupérer un objet via son ID * @param id * @return */
 	public abstract T find(int id);
 

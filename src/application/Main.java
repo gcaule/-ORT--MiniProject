@@ -1,5 +1,6 @@
 package application;
 	
+import application.model.DAO.AlimentDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,6 +12,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
+			
+			//On initialise la BDD
+			AlimentDAO startDB = new AlimentDAO();
+			startDB.createDB();
 			
 			//On charge le fichier FXML pour l'utiliser comme scène
 			FXMLLoader loader = new FXMLLoader();

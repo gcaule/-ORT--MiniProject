@@ -5,7 +5,7 @@ import java.sql.*;
 public class MySQLConnection {
 
 	/** Paramètres de connexion: URL de connection et login, pass pour la BDD */
-	private static String url = "jdbc:mysql://localhost/Aliment?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static String url = "jdbc:mysql://localhost/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static String user = "root";
 	private static String passwd = "";
 

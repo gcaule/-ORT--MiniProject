@@ -1,13 +1,9 @@
 package application.view;
 
-import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 import java.util.stream.IntStream;
 
 import application.model.DAO.AlimentDAO;
@@ -64,24 +60,39 @@ public class SecondaryViewController {
 			//Oui, on récupère toutes les infos
 			String nomAliment = foodNameTF.getText();
 			int quantite = (int) quantityComboBox.getValue();
-			LocalDate dateAchat = dateAchatDP.getValue();
-			LocalDate datePeremption = datePeremptionDP.getValue();
 
 			//On convertit les LocalDate en Date pour pouvoir les stocker en BDD
-			Date dateAchatDB = java.sql.Date.valueOf(String.valueOf(dateAchatDP.getValue()));
-			Date datePeremptionDB = java.sql.Date.valueOf(datePeremption);
+			Date dateAchat = java.sql.Date.valueOf(dateAchatDP.getValue());
+			Date datePeremption = java.sql.Date.valueOf(datePeremptionDP.getValue());
 
-			//On met les infos dans un objet
-			Aliment aliment = new Aliment();
-			aliment.setNom(nomAliment);
-			aliment.setQuantite(quantite);
-			aliment.setDateAchat(dateAchatDB);
-			aliment.setDatePeremption(datePeremptionDB);
+			try {
+				
+				//On met les dates au format européen
+				String dateAchatBuff = dateAchat.toString();
+				String datePeremptionBuff = datePeremption.toString();
 
-			//On met l'objet dans la BDD et dans le Tableview
-			AlimentDAO createAliment = new AlimentDAO();
-			createAliment.create(aliment);
-			data.add(aliment);
+			    SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
+			    SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+			    
+			    String dateAchatObj = newFormat.format(oldFormat.parse(dateAchatBuff));
+			    String datePeremptionObj = newFormat.format(oldFormat.parse(datePeremptionBuff));
+
+				//On met les infos dans un objet
+				Aliment aliment = new Aliment();
+				aliment.setNom(nomAliment);
+				aliment.setQuantite(quantite);
+				aliment.setDateAchat(dateAchatObj.toString());
+				aliment.setDatePeremption(datePeremptionObj.toString());
+
+				//On met l'objet dans la BDD et dans le Tableview
+				AlimentDAO createAliment = new AlimentDAO();
+				createAliment.create(aliment);
+				data.add(aliment);
+
+			} catch (ParseException e) {
+				System.out.println("SVC handleValidateButton() failed: " + e);
+				e.printStackTrace();
+			}
 
 			//On récupère le Stage et on le ferme
 			Stage stage = (Stage) validateButton.getScene().getWindow();

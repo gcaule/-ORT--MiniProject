@@ -45,6 +45,7 @@ public class PrincipalViewController {
 			alimentTV.setItems(aliment);
 
 		} catch(Exception e) {
+			System.out.println("PVC initialize() failed: " + e);
 			e.printStackTrace();
 		}
 
@@ -71,6 +72,7 @@ public class PrincipalViewController {
 			stage.show();
 
 		} catch(Exception e) {
+			System.out.println("PVC handleAddItem() failed: " + e);
 			e.printStackTrace();
 		}
 	}

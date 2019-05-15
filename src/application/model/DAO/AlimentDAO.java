@@ -1,7 +1,8 @@
 package application.model.DAO;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import application.model.beans.Aliment;
@@ -33,6 +34,7 @@ public class AlimentDAO extends DAO<Aliment> {
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: createDB() failed: " + e);
+			e.printStackTrace();
 		}
 
 		return null;
@@ -51,16 +53,36 @@ public class AlimentDAO extends DAO<Aliment> {
 			ResultSet result = statement.executeQuery("SELECT * FROM Aliment ORDER BY DatePeremption;");
 
 			while (result.next()) {
-				aliment.add(new Aliment(result.getInt("Id"),
+
+				Aliment currentItem = new Aliment(result.getInt("Id"),
 						result.getString("Nom"),
 						result.getInt("Quantité"),
-						result.getDate("DateAchat"),
-						result.getDate("DatePeremption")));
+						result.getDate("DateAchat").toString(),
+						result.getDate("DatePeremption").toString());
+
+				//On met les dates au format européen
+				String dateAchatBuff = currentItem.getDateAchat();
+				String datePeremptionBuff = currentItem.getDatePeremption();
+				
+			    SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
+			    SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+			    
+			    String dateAchatObj = newFormat.format(oldFormat.parse(dateAchatBuff));
+			    String datePeremptionObj = newFormat.format(oldFormat.parse(datePeremptionBuff));
+				
+			    //On met les nouvelles dates dans l'objet
+				currentItem.setDateAchat(dateAchatObj);
+				currentItem.setDatePeremption(datePeremptionObj);
+
+				aliment.add(currentItem);
+
 			}
+
 			return aliment;
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: fetchEntries() failed: " + e);
+			e.printStackTrace();
 		}
 
 		return null;
@@ -80,7 +102,7 @@ public class AlimentDAO extends DAO<Aliment> {
 			PreparedStatement preparedStatement = connect.prepareStatement(query);
 			preparedStatement.setInt(1, id);
 			preparedStatement.execute();
-			
+
 			ResultSet result = (ResultSet) preparedStatement;
 
 			while (result.next()) {
@@ -90,17 +112,27 @@ public class AlimentDAO extends DAO<Aliment> {
 				Date bd_dateAchat = result.getDate("DateAchat");
 				Date bd_datePeremption = result.getDate("DatePeremption");
 
+				//On met la date au format européen
+				DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+				
+				String dateAchatBuff = format.format(bd_dateAchat);
+				String datePeremptionBuff = format.format(bd_datePeremption);
+				
+				Date dateAchatObj = format.parse(dateAchatBuff);
+				Date datePeremptionObj = format.parse(datePeremptionBuff);
+
 				aliment.setId(bd_id);
 				aliment.setNom(bd_nom);
 				aliment.setQuantite(bd_quantite);
-				aliment.setDateAchat(bd_dateAchat);
-				aliment.setDatePeremption(bd_datePeremption);
-
+				aliment.setDateAchat(dateAchatObj.toString());
+				aliment.setDatePeremption(datePeremptionObj.toString());
 			}
+			
 			return aliment;
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: find() failed: " + e);
+			e.printStackTrace();
 		}
 
 		return null;
@@ -112,22 +144,31 @@ public class AlimentDAO extends DAO<Aliment> {
 		//On stocke les données de obj dans des variables		
 		String nom = obj.getNom();
 		int quantite = obj.getQuantite();
-		Date dateAchat = (Date) obj.getDateAchat();
-		Date datePeremption = (Date) obj.getDatePeremption();
+		String dateAchat = obj.getDateAchat();
+		String datePeremption = obj.getDatePeremption();
 
 		try {
-
+			//On met la date au format européen, et au format SQL
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+			
+		    Date parseDateAchat = format.parse(dateAchat);
+		    Date parseDatePeremption = format.parse(datePeremption);
+		    
+		    java.sql.Date dateAchatDB = new java.sql.Date(parseDateAchat.getTime());
+		    java.sql.Date datePeremptionDB = new java.sql.Date(parseDatePeremption.getTime());
+			
 			//On stocke les variables dans la BDD
 			String query = "INSERT INTO Aliment (Nom, Quantité, DateAchat, DatePeremption) VALUES (?, ?, ?, ?);";
 			PreparedStatement preparedStatement = connect.prepareStatement(query);
 			preparedStatement.setString(1, nom);
 			preparedStatement.setInt(2, quantite);
-			preparedStatement.setDate(3, (java.sql.Date) dateAchat);
-			preparedStatement.setDate(4, (java.sql.Date) datePeremption);
+			preparedStatement.setDate(3, (java.sql.Date) dateAchatDB);
+			preparedStatement.setDate(4, (java.sql.Date) datePeremptionDB);
 			preparedStatement.execute();
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: create() failed: " + e);
+			e.printStackTrace();
 		}
 
 		return null;
@@ -139,7 +180,7 @@ public class AlimentDAO extends DAO<Aliment> {
 		int id = obj.getId();
 
 		try {
-			
+
 			String query = "DELETE FROM Aliment WHERE Id = ?;";
 			PreparedStatement preparedStatement = connect.prepareStatement(query);
 			preparedStatement.setInt(1, id);
@@ -147,6 +188,7 @@ public class AlimentDAO extends DAO<Aliment> {
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: delete() failed: " + e);
+			e.printStackTrace();
 		}
 
 	}

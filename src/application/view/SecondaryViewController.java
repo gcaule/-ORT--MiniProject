@@ -31,7 +31,7 @@ public class SecondaryViewController {
 	@FXML private Button validateButton;
 	@FXML private Button cancelButton;
 
-	//Cette liste et ce constructeur nous permettra de mettre à jour l'autre scène
+	//Cette liste et ce constructeur nous permettront de mettre à jour l'autre scène
 	private ObservableList<Aliment> data ;
 
 	public void setAlimentData(ObservableList<Aliment> data) {
@@ -61,56 +61,27 @@ public class SecondaryViewController {
 
 		} else {
 
-			//try {
+			//Oui, on récupère toutes les infos
+			String nomAliment = foodNameTF.getText();
+			int quantite = (int) quantityComboBox.getValue();
+			LocalDate dateAchat = dateAchatDP.getValue();
+			LocalDate datePeremption = datePeremptionDP.getValue();
 
-				//Oui, on récupère toutes les infos
-				String nomAliment = foodNameTF.getText();
-				int quantite = (int) quantityComboBox.getValue();
-				LocalDate dateAchat = dateAchatDP.getValue();
-				System.out.println(dateAchat);
-				LocalDate datePeremption = datePeremptionDP.getValue();
-				
-				//DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				
-				Date dateAchatDB = java.sql.Date.valueOf(String.valueOf(dateAchatDP.getValue()));
-				Date datePeremptionDB = java.sql.Date.valueOf(datePeremption);
+			//On convertit les LocalDate en Date pour pouvoir les stocker en BDD
+			Date dateAchatDB = java.sql.Date.valueOf(String.valueOf(dateAchatDP.getValue()));
+			Date datePeremptionDB = java.sql.Date.valueOf(datePeremption);
 
-				/*DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				String dateAchatS = dateAchat.format(format);
-				System.out.println(dateAchatS);
-				String datePeremptionS = datePeremption.format(format);
+			//On met les infos dans un objet
+			Aliment aliment = new Aliment();
+			aliment.setNom(nomAliment);
+			aliment.setQuantite(quantite);
+			aliment.setDateAchat(dateAchatDB);
+			aliment.setDatePeremption(datePeremptionDB);
 
-				DateFormat inputFormat = new SimpleDateFormat("yyyyMM-dd");
-				DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-				Date dateAchatBuff = inputFormat.parse(dateAchatS);
-				System.out.println(dateAchatBuff);
-				Date datePerempBuff = inputFormat.parse(datePeremptionS);
-
-				String achatBuff = outputFormat.format(dateAchatBuff);
-				System.out.println(achatBuff);
-				String perempBuff = outputFormat.format(datePerempBuff);
-
-				Date dateAchatDB = outputFormat.parse(achatBuff);
-				System.out.println(dateAchatDB);
-				Date datePeremptionDB = new SimpleDateFormat("dd/MM/yyyy").parse(perempBuff);*/
-
-				//On met les infos dans un objet
-				Aliment aliment = new Aliment();
-				aliment.setNom(nomAliment);
-				aliment.setQuantite(quantite);
-				aliment.setDateAchat(dateAchatDB);
-				aliment.setDatePeremption(datePeremptionDB);
-
-				//On met l'objet dans la BDD et dans le Tableview
-				AlimentDAO createAliment = new AlimentDAO();
-				createAliment.create(aliment);
-				data.add(aliment);
-
-			/*} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			//On met l'objet dans la BDD et dans le Tableview
+			AlimentDAO createAliment = new AlimentDAO();
+			createAliment.create(aliment);
+			data.add(aliment);
 
 			//On récupère le Stage et on le ferme
 			Stage stage = (Stage) validateButton.getScene().getWindow();

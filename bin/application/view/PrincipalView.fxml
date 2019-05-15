@@ -30,7 +30,7 @@
                         <Insets right="20.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Supprimer le produit sélectionné" textAlignment="JUSTIFY">
+                  <Button fx:id="deleteItem" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDeleteItem" text="Supprimer le produit sélectionné" textAlignment="JUSTIFY">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" top="10.0" />
                      </HBox.margin>

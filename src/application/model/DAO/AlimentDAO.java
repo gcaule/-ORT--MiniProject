@@ -76,8 +76,12 @@ public class AlimentDAO extends DAO<Aliment> {
 
 		try {
 
-			Statement statement = connect.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM Aliment WHERE Id = " + id);
+			String query = "SELECT * FROM Aliment WHERE Id = ?;";
+			PreparedStatement preparedStatement = connect.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
+			
+			ResultSet result = (ResultSet) preparedStatement;
 
 			while (result.next()) {
 				int bd_id = result.getInt("Id");
@@ -114,37 +118,16 @@ public class AlimentDAO extends DAO<Aliment> {
 		try {
 
 			//On stocke les variables dans la BDD
-			Statement statement = connect.createStatement();
-			statement.execute("INSERT INTO Aliment (Nom, Quantité, DateAchat, DatePeremption) VALUES"
-					+ "('" + nom + "', " + quantite + ", '" + dateAchat + "', '" + datePeremption + "')");
+			String query = "INSERT INTO Aliment (Nom, Quantité, DateAchat, DatePeremption) VALUES (?, ?, ?, ?);";
+			PreparedStatement preparedStatement = connect.prepareStatement(query);
+			preparedStatement.setString(1, nom);
+			preparedStatement.setInt(2, quantite);
+			preparedStatement.setDate(3, (java.sql.Date) dateAchat);
+			preparedStatement.setDate(4, (java.sql.Date) datePeremption);
+			preparedStatement.execute();
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: create() failed: " + e);
-		}
-
-		return null;
-	}
-
-	@Override
-	public Aliment update(Aliment obj) {
-
-		int id = obj.getId();
-		String nom = obj.getNom();
-		int quantite = obj.getQuantite();
-		Date dateAchat = obj.getDateAchat();
-		Date datePeremption = obj.getDatePeremption();
-
-		try {
-
-			Statement statement = connect.createStatement();
-			statement.execute("UPDATE Aliment SET Nom = '" + nom + "', "
-					+ "Quantité = " + quantite + ", "
-					+ "DateAchat = '" + dateAchat + "', "
-					+ "DatePeremption = '" + datePeremption + "', "
-					+ "WHERE Id = " + id + ")");
-
-		} catch (Exception e) {
-			System.out.println("AlimentDAO: update() failed: " + e);
 		}
 
 		return null;
@@ -156,14 +139,22 @@ public class AlimentDAO extends DAO<Aliment> {
 		int id = obj.getId();
 
 		try {
-
-			Statement statement = connect.createStatement();
-			statement.execute("DELETE FROM Aliment WHERE Id = " + id + ")");
+			
+			String query = "DELETE FROM Aliment WHERE Id = ?;";
+			PreparedStatement preparedStatement = connect.prepareStatement(query);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
 
 		} catch (Exception e) {
 			System.out.println("AlimentDAO: delete() failed: " + e);
 		}
 
+	}
+
+	@Override
+	public Aliment update(Aliment obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

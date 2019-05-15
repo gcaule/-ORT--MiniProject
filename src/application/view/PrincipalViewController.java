@@ -23,42 +23,43 @@ public class PrincipalViewController {
 	@FXML private TableColumn dateAchatColumn;
 	@FXML private TableColumn datePeremptionColumn;
 	@FXML private Button addItem;
+	@FXML private Button deleteItem;
 	@FXML private Button quitButton;
-	
+
 	public void initialize() {
 
 		try {
-		//On initialise le tableview avec les entrées de la BDD
-		
-		//On récupère la liste d'aliments en BDD
-		AlimentDAO listeAliment = new AlimentDAO();
-		ObservableList<Aliment> aliment = listeAliment.fetchEntries();
-		
-		//On prépare les colonnes du tableview et on le kpeuple avec les objets
-		ObservableList<TableColumn> columns = alimentTV.getColumns();		
-		
-		columns.get(0).setCellValueFactory(new PropertyValueFactory("nom"));
-		columns.get(1).setCellValueFactory(new PropertyValueFactory("quantite"));
-		columns.get(2).setCellValueFactory(new PropertyValueFactory("dateAchat"));
-		columns.get(3).setCellValueFactory(new PropertyValueFactory("datePeremption"));
-		alimentTV.setItems(aliment);
+			//On initialise le tableview avec les entrées de la BDD
+
+			//On récupère la liste d'aliments en BDD
+			AlimentDAO listeAliment = new AlimentDAO();
+			ObservableList<Aliment> aliment = listeAliment.fetchEntries();
+
+			//On prépare les colonnes du tableview et on le peuple avec les objets
+			ObservableList<TableColumn> columns = alimentTV.getColumns();		
+
+			columns.get(0).setCellValueFactory(new PropertyValueFactory("nom"));
+			columns.get(1).setCellValueFactory(new PropertyValueFactory("quantite"));
+			columns.get(2).setCellValueFactory(new PropertyValueFactory("dateAchat"));
+			columns.get(3).setCellValueFactory(new PropertyValueFactory("datePeremption"));
+			alimentTV.setItems(aliment);
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void handleAddItem() {		
-		
+
 		try {
 			//On charge le fichier FXML pour l'utiliser comme scène
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/SecondaryView.fxml"));
 			Parent root = (Parent) loader.load();
-			
+
 			//On insère la liste des aliments dans le controller pour
-			//pouvoir mettre la vue à jour à partir de l'autre controller
+			//pouvoir mettre la vue à jour à partir de l'autre stage
 			SecondaryViewController svc = loader.getController();
 			svc.setAlimentData(alimentTV.getItems());
 
@@ -73,13 +74,33 @@ public class PrincipalViewController {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void handleDeleteItem() {
+
+		//Ce handler ne doit être exécuté que si une ligne est sélectionnée
+		if(alimentTV.getSelectionModel().getSelectedItem() != null) {
+
+			//On efface la ligne sélectionnée de la BDD
+			Aliment selectedItem = (Aliment) alimentTV.getSelectionModel().getSelectedItem();
+			AlimentDAO deleteItem = new AlimentDAO();
+			deleteItem.delete(selectedItem);
+
+			//On récupère la nouvelle liste d'aliments en BDD et on la met dans le tableview
+			AlimentDAO listeAliment = new AlimentDAO();
+			ObservableList<Aliment> aliment = listeAliment.fetchEntries();
+
+			alimentTV.getItems().clear();
+			alimentTV.setItems(aliment);
+
+		}
+	}
+
 	public void handleQuitButton() {
-		
+
 		//On récupère le Stage et on le ferme
 		Stage stage = (Stage) quitButton.getScene().getWindow();
 		stage.close();
-		
+
 	}
 
 }

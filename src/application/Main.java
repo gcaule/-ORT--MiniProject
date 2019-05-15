@@ -1,6 +1,7 @@
 package application;
 	
 import application.model.DAO.AlimentDAO;
+import application.view.PrincipalViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;

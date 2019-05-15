@@ -1,20 +1,18 @@
 package application.view;
 
-import java.time.LocalDate;
-import java.util.stream.IntStream;
-
 import application.Main;
 import application.model.DAO.AlimentDAO;
 import application.model.beans.Aliment;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PrincipalViewController {
@@ -50,20 +48,22 @@ public class PrincipalViewController {
 		}
 		
 	}
-	
-	public void reload() {
-		alimentTV.refresh();
-	}
 
-	public void handleAddItem() {
+	public void handleAddItem() {		
 		
 		try {
 			//On charge le fichier FXML pour l'utiliser comme scène
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/SecondaryView.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
+			Parent root = (Parent) loader.load();
+			
+			//On insère la liste des aliments dans le controller pour
+			//pouvoir mettre la vue à jour à partir de l'autre controller
+			SecondaryViewController svc = loader.getController();
+			svc.setAlimentData(alimentTV.getItems());
 
 			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.setTitle("Ajouter du manger");

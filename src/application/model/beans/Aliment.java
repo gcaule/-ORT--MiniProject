@@ -1,10 +1,10 @@
 package application.model.beans;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Aliment {
 	
-	public Aliment(int id, String nom, int quantite, LocalDate dateAchat, LocalDate datePeremption) {
+	public Aliment(int id, String nom, int quantite, Date dateAchat, Date datePeremption) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -16,8 +16,8 @@ public class Aliment {
 	private int id;
 	private String nom;
 	private int quantite;
-	private LocalDate dateAchat;
-	private LocalDate datePeremption;
+	private Date dateAchat;
+	private Date datePeremption;
 	
 	public Aliment() {
 		
@@ -47,19 +47,19 @@ public class Aliment {
 		this.quantite = quantite;
 	}
 
-	public LocalDate getDateAchat() {
+	public Date getDateAchat() {
 		return dateAchat;
 	}
 
-	public void setDateAchat(LocalDate dateAchat) {
+	public void setDateAchat(Date dateAchat) {
 		this.dateAchat = dateAchat;
 	}
 
-	public LocalDate getDatePeremption() {
+	public Date getDatePeremption() {
 		return datePeremption;
 	}
 
-	public void setDatePeremption(LocalDate dateperemption) {
+	public void setDatePeremption(Date dateperemption) {
 		this.datePeremption = dateperemption;
 	}
 

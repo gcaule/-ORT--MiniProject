@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SecondaryViewController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Entrez un nouveau produit">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="150.0" text="Type de produit">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="25.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="foodNameTF" minHeight="-Infinity" minWidth="450.0" promptText="Entrez un aliment" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="150.0" text="Quantité">
+                           <padding>
+                              <Insets bottom="25.0" />
+                           </padding>
+                        </Label>
+                        <ComboBox fx:id="quantityComboBox" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="102.0" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="150.0" text="Date d'achat">
+                           <padding>
+                              <Insets bottom="25.0" />
+                           </padding>
+                        </Label>
+                        <DatePicker fx:id="dateAchatDP" promptText="dd-MM-yyyy" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="132.0" prefHeight="55.0" prefWidth="200.0">
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="150.0" text="Date de péremption">
+                           <padding>
+                              <Insets bottom="25.0" />
+                           </padding></Label>
+                        <DatePicker fx:id="datePeremptionDP" promptText="dd-MM-yyyy" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="validateButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleValidateButton" text="Entrer le produit dans la liste">
+                     <HBox.margin>
+                        <Insets right="35.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="cancelButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleCancelButton" text="Annuler">
+                     <HBox.margin>
+                        <Insets left="35.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

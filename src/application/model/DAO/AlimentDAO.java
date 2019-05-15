@@ -2,6 +2,7 @@ package application.model.DAO;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 import application.model.beans.Aliment;
 import javafx.collections.FXCollections;
@@ -47,14 +48,14 @@ public class AlimentDAO extends DAO<Aliment> {
 			ObservableList<Aliment> aliment = FXCollections.observableArrayList();
 
 			Statement statement = connect.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM Aliment ;");
+			ResultSet result = statement.executeQuery("SELECT * FROM Aliment ORDER BY DatePeremption;");
 
 			while (result.next()) {
 				aliment.add(new Aliment(result.getInt("Id"),
 						result.getString("Nom"),
 						result.getInt("Quantité"),
-						result.getDate("DateAchat").toLocalDate(),
-						result.getDate("DatePeremption").toLocalDate()));
+						result.getDate("DateAchat"),
+						result.getDate("DatePeremption")));
 			}
 			return aliment;
 
@@ -82,8 +83,8 @@ public class AlimentDAO extends DAO<Aliment> {
 				int bd_id = result.getInt("Id");
 				String bd_nom = result.getString("Nom");
 				int bd_quantite = result.getInt("Quantité");
-				LocalDate bd_dateAchat = result.getDate("DateAchat").toLocalDate();
-				LocalDate bd_datePeremption = result.getDate("DatePeremption").toLocalDate();
+				Date bd_dateAchat = result.getDate("DateAchat");
+				Date bd_datePeremption = result.getDate("DatePeremption");
 
 				aliment.setId(bd_id);
 				aliment.setNom(bd_nom);
@@ -107,8 +108,8 @@ public class AlimentDAO extends DAO<Aliment> {
 		//On stocke les données de obj dans des variables		
 		String nom = obj.getNom();
 		int quantite = obj.getQuantite();
-		LocalDate dateAchat = obj.getDateAchat();
-		LocalDate datePeremption = obj.getDatePeremption();
+		Date dateAchat = (Date) obj.getDateAchat();
+		Date datePeremption = (Date) obj.getDatePeremption();
 
 		try {
 
@@ -130,8 +131,8 @@ public class AlimentDAO extends DAO<Aliment> {
 		int id = obj.getId();
 		String nom = obj.getNom();
 		int quantite = obj.getQuantite();
-		LocalDate dateAchat = obj.getDateAchat();
-		LocalDate datePeremption = obj.getDatePeremption();
+		Date dateAchat = obj.getDateAchat();
+		Date datePeremption = obj.getDatePeremption();
 
 		try {
 

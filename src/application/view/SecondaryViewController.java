@@ -84,7 +84,7 @@ public class SecondaryViewController {
 				aliment.setDateAchat(dateAchatObj.toString());
 				aliment.setDatePeremption(datePeremptionObj.toString());
 
-				//On met l'objet dans la BDD et dans le Tableview
+				//On met l'objet dans la BDD et dans le tableview
 				AlimentDAO createAliment = new AlimentDAO();
 				createAliment.create(aliment);
 				data.add(aliment);

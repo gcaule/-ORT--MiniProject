@@ -63,14 +63,14 @@ public class AlimentDAO extends DAO<Aliment> {
 				//On met les dates au format européen
 				String dateAchatBuff = currentItem.getDateAchat();
 				String datePeremptionBuff = currentItem.getDatePeremption();
-				
-			    SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
-			    SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
-			    
-			    String dateAchatObj = newFormat.format(oldFormat.parse(dateAchatBuff));
-			    String datePeremptionObj = newFormat.format(oldFormat.parse(datePeremptionBuff));
-				
-			    //On met les nouvelles dates dans l'objet
+
+				SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+				String dateAchatObj = newFormat.format(oldFormat.parse(dateAchatBuff));
+				String datePeremptionObj = newFormat.format(oldFormat.parse(datePeremptionBuff));
+
+				//On met les nouvelles dates dans l'objet
 				currentItem.setDateAchat(dateAchatObj);
 				currentItem.setDatePeremption(datePeremptionObj);
 
@@ -114,10 +114,10 @@ public class AlimentDAO extends DAO<Aliment> {
 
 				//On met la date au format européen
 				DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-				
+
 				String dateAchatBuff = format.format(bd_dateAchat);
 				String datePeremptionBuff = format.format(bd_datePeremption);
-				
+
 				Date dateAchatObj = format.parse(dateAchatBuff);
 				Date datePeremptionObj = format.parse(datePeremptionBuff);
 
@@ -127,7 +127,7 @@ public class AlimentDAO extends DAO<Aliment> {
 				aliment.setDateAchat(dateAchatObj.toString());
 				aliment.setDatePeremption(datePeremptionObj.toString());
 			}
-			
+
 			return aliment;
 
 		} catch (Exception e) {
@@ -150,13 +150,13 @@ public class AlimentDAO extends DAO<Aliment> {
 		try {
 			//On met la date au format européen, et au format SQL
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-			
-		    Date parseDateAchat = format.parse(dateAchat);
-		    Date parseDatePeremption = format.parse(datePeremption);
-		    
-		    java.sql.Date dateAchatDB = new java.sql.Date(parseDateAchat.getTime());
-		    java.sql.Date datePeremptionDB = new java.sql.Date(parseDatePeremption.getTime());
-			
+
+			Date parseDateAchat = format.parse(dateAchat);
+			Date parseDatePeremption = format.parse(datePeremption);
+
+			java.sql.Date dateAchatDB = new java.sql.Date(parseDateAchat.getTime());
+			java.sql.Date datePeremptionDB = new java.sql.Date(parseDatePeremption.getTime());
+
 			//On stocke les variables dans la BDD
 			String query = "INSERT INTO Aliment (Nom, Quantité, DateAchat, DatePeremption) VALUES (?, ?, ?, ?);";
 			PreparedStatement preparedStatement = connect.prepareStatement(query);

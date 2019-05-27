@@ -15,7 +15,7 @@ public abstract class DAO<T> {
 	public abstract T createDB();
 
 	/** * Permet de récupérer une liste de tuples de la base de données */
-	public abstract ObservableList<Aliment> fetchEntries();
+	public abstract ObservableList<T> fetchEntries();
 
 	/** * Permet de récupérer un objet via son ID * @param id * @return */
 	public abstract T find(int id);
